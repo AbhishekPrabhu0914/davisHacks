@@ -1,123 +1,76 @@
 import React, { useState } from 'react';
+// Assuming you have a corresponding CSS file (e.g., FileViewer.css)
+import './css/FileUploader.css';
 
-function FileUploader() {
-  // State to store the selected file
-  const [selectedFile, setSelectedFile] = useState(null);
-  // State to store a preview URL if the file is an image (optional)
-  const [preview, setPreview] = useState(null);
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    console.log('--- handleFileChange Triggered ---');
+    console.log('File selected:', file); // Log the whole file object
 
-  // Handles the file selection event
-  const handleFileChange = (event) => {
-    const file = event.target.files[0]; // Get the first file selected
+    // Reset state first
+    setSelectedFile(null);
+    setPreview(null);
 
     if (file) {
+      // Log file type *before* the check
+      console.log('[Debug] File Type:', file.type);
       setSelectedFile(file);
-      console.log("File selected:", file);
 
-      // Optional: Create a preview URL for image files
+      // Check if it's an image type
       if (file.type.startsWith('image/')) {
+        console.log('[Debug] File type IS image. Creating FileReader.');
         const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreview(reader.result);
+
+        // Optional: Log when reading starts
+        reader.onloadstart = () => {
+            console.log('[Debug] FileReader: Reading started...');
         };
+
+        // This is the crucial part: Log when reading finishes
+        reader.onloadend = () => {
+          console.log('[Debug] FileReader: onloadend triggered.');
+          if (reader.result) {
+             // Log the length to check if we got data
+             console.log('[Debug] FileReader: Result available, length:', reader.result.length);
+             // Log the beginning of the result to verify it's a data URL
+             console.log('[Debug] FileReader: Result starts with:', reader.result.substring(0, 50));
+             setPreview(reader.result); // Update the state
+             console.log('[Debug] setPreview called.');
+          } else {
+              console.error('[Debug] FileReader: Result is empty or null.');
+          }
+        };
+
+        // Log any errors during file reading
+        reader.onerror = (error) => {
+            console.error('[Error] FileReader Error:', error);
+        };
+
+        // Log right before starting the read operation
+        console.log('[Debug] FileReader: Calling readAsDataURL...');
         reader.readAsDataURL(file);
+
       } else {
-        setPreview(null); // Clear preview if not an image
+         // Log if the file type wasn't recognized as an image
+         console.log('[Debug] File type is NOT image (`' + file.type + '`), skipping preview generation.');
       }
 
     } else {
-      // Handle the case where the user cancels file selection
-      setSelectedFile(null);
-      setPreview(null);
-      console.log("File selection cancelled.");
+      // Log if the user cancelled the dialog
+      console.log('[Debug] File selection cancelled or no file chosen.');
     }
-
-    // Clear the input value to allow selecting the same file again if needed
-    // event.target.value = null; // Uncomment if you need this behavior
+    // event.target.value = null; // Optional
   };
 
-  // Optional: Handle the file upload logic (e.g., send to server)
-  const handleUpload = async () => {
-    if (!selectedFile) {
-      alert("Please select a file first!");
-      return;
-    }
+  // Also, add a log inside the JSX where the image is rendered:
+  // In the return(...) part of FileViewer.js:
 
-    // --- Upload Logic Would Go Here ---
-    // Typically involves creating FormData and using fetch or Axios
-    // Example using FormData and fetch:
-    const formData = new FormData();
-    formData.append('file', selectedFile); // 'file' is the key expected by the server
-
-    console.log("Uploading file:", selectedFile.name);
-
-    try {
-      // Replace '/api/upload' with your actual backend endpoint
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-        // Headers might be needed depending on your backend (e.g., Authorization)
-        // headers: { 'Authorization': 'Bearer YOUR_TOKEN' }
-      });
-
-      if (!response.ok) {
-        throw new Error(`Upload failed with status: ${response.status}`);
-      }
-
-      const result = await response.json(); // Or response.text() depending on backend
-      console.log("Upload successful:", result);
-      alert(`File "${selectedFile.name}" uploaded successfully!`);
-      // Optionally clear the selection after successful upload
-      // setSelectedFile(null);
-      // setPreview(null);
-
-    } catch (error) {
-      console.error("Upload error:", error);
-      alert(`Error uploading file: ${error.message}`);
-    }
-    // --- End of Upload Logic ---
-  };
-
-
-  return (
-    <div>
-      <h2>Select a File</h2>
-      {/* File Input */}
-      <input
-        type="file"
-        onChange={handleFileChange}
-        // You can add 'accept' to suggest file types to the browser
-        // accept="image/*,.pdf,.txt"
-      />
-
-      {/* Display File Info and Preview */}
-      {selectedFile && (
-        <div style={{ marginTop: '20px' }}>
-          <h3>File Details:</h3>
-          <p>Name: {selectedFile.name}</p>
-          <p>Type: {selectedFile.type}</p>
-          <p>Size: {Math.round(selectedFile.size / 1024)} KB</p>
-
-          {/* Image Preview */}
-          {preview && (
-            <div>
-              <h4>Preview:</h4>
-              <img src={preview} alt="Selected preview" style={{ maxWidth: '200px', maxHeight: '200px' }} />
-            </div>
-          )}
-
-          {/* Upload Button */}
-          <button onClick={handleUpload} style={{ marginTop: '10px' }}>
-            Upload File
-          </button>
-        </div>
-      )}
-
-      {!selectedFile && (
-         <p style={{ marginTop: '20px' }}>No file selected.</p>
-      )}
+  {preview && (
+    <div className="preview-section">
+      <h4>Preview:</h4>
+      {/* Add this log */}
+      {console.log('[Render] Rendering preview image. Preview state available:', !!preview)}
+      <img src={preview} alt="Selected preview" className="preview-image" />
     </div>
-  );
-}
-
-export default FileUploader;
+  )}
+export default FileViewer;
