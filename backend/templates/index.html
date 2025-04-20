@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Image Explosion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+
+    <h1>The Image Explosion</h1>
+
+    <p>In today’s digital world, we are surrounded by images. From professionally curated libraries to spontaneous social media uploads, the volume of visual content is growing at a staggering pace.</p>
+
+    <h2>A Visual Comparison</h2>
+
+    <p>The graph below highlights the scale of this explosion. It compares different sources and platforms where images are stored, indexed, or uploaded.</p>
+
+    <img src="{{ url_for('static', filename='graphs/graph1.png') }}" alt="Image Content Comparison Graph">
+
+    <p>It’s fascinating to note:</p>
+    <ul>
+        <li><strong>Facebook</strong> leads by far, with over <strong>1.5 trillion</strong> images uploaded.</li>
+        <li><strong>Pinterest</strong> follows with 240 billion pins saved — a haven for visual bookmarking.</li>
+        <li><strong>Google Images</strong> indexes 136 billion images, helping users find visuals across the web.</li>
+        <li><strong>Instagram</strong> users have contributed over 50 billion images, capturing moments across the globe.</li>
+        <li>Even AI-generated images have reached a staggering 15 billion, showing the growing role of artificial creativity.</li>
+        <li>And Shutterstock, despite being a professional stock library, holds a relatively modest 386 million images.</li>
+    </ul>
+
+    <p>This graph paints a vivid picture of our image-saturated digital age. Platforms once meant for communication or search have now evolved into massive visual archives — and the numbers are only climbing.</p>
+
+    <footer>
+        <p>Sources: EarthWeb, The Social Shepherd, Photutorial, Insider, OpenAI, Adobe, Civitai.<br>Data as of August 2023.</p>
+        <p><a href="#">Back to top ↑</a></p>
+    </footer>
+
+</body>
+</html>
