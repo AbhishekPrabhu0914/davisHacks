@@ -1,3 +1,5 @@
+from io import BytesIO
+from tkinter import Image
 from flask import Flask, request, jsonify, make_response, render_template
 from flask_cors import CORS, cross_origin
 import tensorflow as tf
@@ -65,9 +67,6 @@ def predict():
         return jsonify({'ai_probability': float(prediction)}) # Ensure it's a float for JSON
 
     return jsonify({'error': 'Invalid request method'}), 405
-
-if __name__ == '__main__':
-    app.run(debug=True)
 
 if __name__ == '__main__':
     app.run(port=5050)
