@@ -11,7 +11,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Detection API response:", data); // helpful for debugging
         sendResponse({ result: data.score });
       })
       .catch((err) => {

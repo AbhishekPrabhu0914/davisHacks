@@ -3,21 +3,9 @@ chrome.storage.sync.get('enabled', (data) => {
   
     (async function () {
       const images = Array.from(document.querySelectorAll('img'));
-      const visibleImages = images.filter(img => {
-        const rect = img.getBoundingClientRect();
-        return (
-          rect.width > 0 &&
-          rect.height > 0 &&
-          rect.bottom > 0 &&
-          rect.top < window.innerHeight &&
-          rect.left < window.innerWidth &&
-          rect.right > 0
-        );
-      });
   
-      for (const img of visibleImages) {
+      for (const img of images) {
         const rect = img.getBoundingClientRect();
-  
         // 🏷️ Create banner
         const banner = document.createElement('div');
         banner.innerText = 'Analyzing...';
