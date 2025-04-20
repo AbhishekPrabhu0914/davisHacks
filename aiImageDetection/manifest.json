@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "AI Image Detector",
+  "version": "1.0",
+  "description": "Detects AI-generated images on the current page.",
+  "permissions": ["activeTab", "scripting","downloads"],
+  "host_permissions": ["https://api.aiornot.com/*"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
