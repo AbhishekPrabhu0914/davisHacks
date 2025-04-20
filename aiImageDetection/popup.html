@@ -1,46 +1,26 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>AI Image Picker</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 12px;
-      width: 250px;
-    }
+  <head>
+    <title>AI Image Detector</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 10px;
+      }
+      label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>AI Image Detector</h3>
+    <label>
+      <input type="checkbox" id="toggleSwitch" />
+      Enable Auto Detection
+    </label>
 
-    h1 {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      font-size: 14px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    .note {
-      font-size: 12px;
-      margin-top: 10px;
-      color: #666;
-    }
-  </style>
-</head>
-<body>
-  <h1>AI Image Picker</h1>
-  <button id="pickImageBtn">Pick an Image to Check</button>
-  <p class="note">Click the button, then choose an image on the page.</p>
-
-  <script src="popup.js"></script>
-</body>
+    <script src="popup.js"></script>
+  </body>
 </html>
