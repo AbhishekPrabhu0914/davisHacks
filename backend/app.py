@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, render_template
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -7,6 +7,16 @@ CORS(app, resources={ r"/predict": {
     }
 })
 
+
+@app.route('/')
+def index():
+    # Image filenames stored in static/graphs/
+    graph1 = 'graphs/graph1.png'
+    graph2 = 'graphs/graph2.png'
+    return render_template('index.html', graph1=graph1, graph2=graph2)
+
+  
+  
 @app.route('/predict', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def predict():
